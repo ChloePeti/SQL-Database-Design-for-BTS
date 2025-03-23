@@ -1,4 +1,4 @@
--- This query shows customer feeback based on the city
+-- QUERY 1: This query shows customer feeback based on the city
 SELECT:
     customer.city, 
     AVG(customer_feedback.rating) AS average_rating, 
@@ -8,13 +8,13 @@ INNER JOIN customer_feedback ON customer.customer_id = customer_feedback.custome
 GROUP BY customer.city
 ORDER BY average_rating ASC;
 
--- This query shows employee availability to track their workload
+-- QUERY 2: This query shows employee availability to track their workload
 SELECT e.employee_id AS [Employee ID], e.f_name AS Employee, e.work_hours_per_week AS [Working Hours], NZ(SUM(et.hours_allocated_per_week), 0) AS [Total Workload], (e.work_hours_per_week - NZ(SUM(et.hours_allocated_per_week), 0)) AS [Remaining Available Hours]
 FROM employee AS e LEFT JOIN (employee_task AS et LEFT JOIN project_task AS pt ON et.task_id = pt.task_id) ON e.employee_id = et.employee_id
 WHERE et.completion_date IS NULL
 GROUP BY e.employee_id, e.f_name, e.work_hours_per_week;
 
--- This query pulls employess, their office location, and their skills in order to know which employees at each office
+-- QUERY 3: This query pulls employess, their office location, and their skills in order to know which employees at each office
 -- have the proper skills for a particular project
 SELECT e.employee_id AS [Employee ID], e.f_name AS Employee, e.office_id AS [Office ID], s.skill_name AS [Skill], es.proficiency_level AS [Proficiency Level]
 FROM (employee AS e 
@@ -26,7 +26,7 @@ INNER JOIN
 ON es.skill_id = s.skill_id
 WHERE s.skill_name = 'Python';
 
--- This query pulls customer information, including their location, customer rating, associated projects, and number of projects. This report can
+-- QUERY 4: This query pulls customer information, including their location, customer rating, associated projects, and number of projects. This report can
 -- tell us both how locations ar eperfomrong with their customers as well as how busy each location is and where there may be rooms for 
 -- improvement
 SELECT 
